@@ -64,18 +64,21 @@
     keys.push(audioTrack.dataset.key);
   }
   document.addEventListener("keydown", (event) => {
-    if(keys.indexOf(event.code) === -1) return;
-    const key = document.querySelector(`div[data-key="${event.code}"]`);
+    if(keys.indexOf(event.keyCode) === -1) return;
+    const key = document.querySelector(`div[data-key="${event.keyCode}"]`);
+    if(!key) {
+      throw Error("Cannot locate key for this keyCode");
+    }
     key.classList.add("playing");
-    const audio = document.querySelector(`audio[data-key="${event.code}"]`);
+    const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
     if(!audio){
       throw Error("Cannot locate audio for this key");
     }
     audio.play();
   });
   document.addEventListener("keyup", (event) => {
-    if(keys.indexOf(event.code) === -1) return;
-    const key = document.querySelector(`div[data-key="${event.code}"]`);
+    if(keys.indexOf(event.keyCode) === -1) return;
+    const key = document.querySelector(`div[data-key="${event.keyCode}"]`);
     key.classList.remove("playing");
   });
 </script>
